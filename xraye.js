@@ -1,8 +1,8 @@
 /* ==========================================================
  * x r a y e
  * Annotate sizing and spacing of HTML elements
- * v0.8.0
- * 
+ * v0.8.1
+ *
  * https://github.com/wonderscore/xraye
  *
  * Author: Danny Allen (me@dannya.com)
@@ -885,6 +885,28 @@
                 }
               }
 
+              // draw arrows detailing margin values if they exceed the threshold...
+              if (elStyles.marginTop >= _this.options.valueAnnotationThreshold) {
+                _this.drawArrow(
+                  elementId, 'marginTop', false, (elData.left - _this.elementData.left), (elData.top - _this.elementData.top - elStyles.marginTop), elStyles.marginTop
+                );
+              }
+              if (elStyles.marginBottom >= _this.options.valueAnnotationThreshold) {
+                _this.drawArrow(
+                  elementId, 'marginBottom', false, (elData.left - _this.elementData.left), (elData.top - _this.elementData.top + elData.height), elStyles.marginBottom
+                );
+              }
+              if (elStyles.marginLeft >= _this.options.valueAnnotationThreshold) {
+                _this.drawArrow(
+                  elementId, 'marginLeft', true, (elData.left - _this.elementData.left), (elData.top - _this.elementData.top - elStyles.marginLeft), elStyles.marginLeft
+                );
+              }
+              if (elStyles.marginRight >= _this.options.valueAnnotationThreshold) {
+                _this.drawArrow(
+                  elementId, 'marginRight', true, (elData.left - _this.elementData.left + (elData.width - elStyles.marginRight)), (elData.top - _this.elementData.top + elStyles.marginRight), elStyles.marginRight
+                );
+              }
+
               // draw arrows detailing padding values if they exceed the threshold...
               if (elStyles.paddingTop >= _this.options.valueAnnotationThreshold) {
                 _this.drawArrow(
@@ -929,8 +951,8 @@
       return {
         left:   Math.floor(pos.left),
         top:    Math.floor(pos.top),
-        width:  Math.floor($el.width()),
-        height: Math.floor($el.height())
+        width:  Math.floor($el.outerWidth()),
+        height: Math.floor($el.outerHeight())
       };
     }
   };
