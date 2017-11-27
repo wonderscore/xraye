@@ -1,7 +1,7 @@
 /* ==========================================================
  * x r a y e
  * Annotate sizing and spacing of HTML elements
- * v0.8.1
+ * v0.8.2
  *
  * https://github.com/wonderscore/xraye
  *
@@ -18,14 +18,15 @@
         // UI editable options...
         active:                     true,
 
-        pointerTransparency:        false,
-
         showSizing:                 true,
         showSpacing:                true,
-        showPropertyNames:          true,
+        showFontSizing:             true,
 
         displayUnitsPixels:         true,
         displayUnitsPercent:        true,
+
+        showPropertyNames:          true,
+        pointerTransparency:        false,
 
 
         // plugin instantiation options...
@@ -40,8 +41,8 @@
 
         annotationColors: {
           sizing: {
-            'line':                 'black',
-            'box':                  'black',
+            'line':                 'red',
+            'box':                  'red',
             'arrow':                'red',
             'text':                 'white',
             'line:hover':           'red',
@@ -50,13 +51,23 @@
             'text:hover':           'white'
           },
           spacing: {
-            'line':                 'orange',
-            'box':                  'orange',
+            'line':                 'green',
+            'box':                  'green',
             'arrow':                'green',
-            'text':                 'black',
+            'text':                 'white',
             'line:hover':           'green',
             'box:hover':            'green',
             'arrow:hover':          'green',
+            'text:hover':           'white'
+          },
+          fontSizing: {
+            'line':                 'blue',
+            'box':                  'blue',
+            'arrow':                'blue',
+            'text':                 'white',
+            'line:hover':           'blue',
+            'box:hover':            'blue',
+            'arrow:hover':          'blue',
             'text:hover':           'white'
           }
         },
@@ -101,6 +112,9 @@
         'marginBottom',
         'marginLeft',
         'marginRight'
+      ],
+      'fontSizing': [
+        'fontSize'
       ]
     };
 
@@ -290,8 +304,9 @@
       }
 
 
-      // styles for all arrows...
-      this.canvasStyles['[data-xraye-arrow]'] = {
+      // styles for all arrows and text boxes...
+      this.canvasStyles['[data-xraye-arrow]'] =
+        this.canvasStyles['[data-xraye-box]'] = {
         'position':           'absolute',
         'opacity':            (this.options.pointerTransparency ? '1' : '0.3'),
         'pointer-events':     'none'
@@ -303,10 +318,10 @@
         'text-align':         'center',
         'border-top':         '2px solid'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="sizing"]'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="sizing"]'] = {
         'border-top-color':   this.options.annotationColors.sizing.line
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="spacing"]'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="spacing"]'] = {
         'border-top-color':   this.options.annotationColors.spacing.line
       };
 
@@ -317,14 +332,6 @@
         'z-index':            '10001',
         'transform':          'translate(-100%, -50%)'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="sizing"] span'] = {
-        'color':              this.options.annotationColors.sizing.text,
-        'background':         this.options.annotationColors.sizing.box
-      };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="spacing"] span'] = {
-        'color':              this.options.annotationColors.spacing.text,
-        'background':         this.options.annotationColors.spacing.box
-      };
 
       this.canvasStyles['[data-xraye-arrow-orientation="horizontal"]:before'] = {
         'content':            '"\\25C0"',
@@ -334,10 +341,10 @@
         'top':                '-11px',
         'font-size':          '14px'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="sizing"]:before'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="sizing"]:before'] = {
         'color':              this.options.annotationColors.sizing.arrow
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="spacing"]:before'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="spacing"]:before'] = {
         'color':              this.options.annotationColors.spacing.arrow
       };
 
@@ -349,10 +356,10 @@
         'top':                '-11px',
         'font-size':          '14px'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="sizing"]:after'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="sizing"]:after'] = {
         'color':              this.options.annotationColors.sizing.arrow
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="spacing"]:after'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="spacing"]:after'] = {
         'color':              this.options.annotationColors.spacing.arrow
       };
 
@@ -364,10 +371,10 @@
         'justify-content':    'center',
         'border-left':        '2px solid'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="sizing"]'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="sizing"]'] = {
         'border-left-color':  this.options.annotationColors.sizing.line
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="spacing"]'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="spacing"]'] = {
         'border-left-color':   this.options.annotationColors.spacing.line
       };
 
@@ -378,14 +385,6 @@
         'z-index':            '10001',
         'transform':          'translate(-50%, 0)'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="sizing"] span'] = {
-        'color':              this.options.annotationColors.sizing.text,
-        'background':         this.options.annotationColors.sizing.box
-      };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="spacing"] span'] = {
-        'color':              this.options.annotationColors.spacing.text,
-        'background':         this.options.annotationColors.spacing.box
-      };
 
       this.canvasStyles['[data-xraye-arrow-orientation="vertical"]:before'] = {
         'content':            '"\\25B2"',
@@ -395,10 +394,10 @@
         'top':                '-7px',
         'font-size':          '14px'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="sizing"]:before'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="sizing"]:before'] = {
         'color':              this.options.annotationColors.sizing.arrow
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="spacing"]:before'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="spacing"]:before'] = {
         'color':              this.options.annotationColors.spacing.arrow
       };
 
@@ -410,11 +409,30 @@
         'bottom':             '-7px',
         'font-size':          '14px'
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="sizing"]:after'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="sizing"]:after'] = {
         'color':              this.options.annotationColors.sizing.arrow
       };
-      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="spacing"]:after'] = {
+      this.canvasStyles['[data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="spacing"]:after'] = {
         'color':              this.options.annotationColors.spacing.arrow
+      };
+
+
+      // styles for text boxes
+      this.canvasStyles['[data-xraye-annotation-type="sizing"] span'] = {
+        'color':              this.options.annotationColors.sizing.text,
+        'background':         this.options.annotationColors.sizing.box
+      };
+      this.canvasStyles['[data-xraye-annotation-type="spacing"] span'] = {
+        'color':              this.options.annotationColors.spacing.text,
+        'background':         this.options.annotationColors.spacing.box
+      };
+      this.canvasStyles['[data-xraye-annotation-type="fontSizing"] span'] = {
+        'display':            'inline-block',
+        'white-space':        'nowrap',
+        'padding':            '1px 3px 3px 3px',
+        'z-index':            '10001',
+        'color':              this.options.annotationColors.fontSizing.text,
+        'background':         this.options.annotationColors.fontSizing.box
       };
     },
 
@@ -442,14 +460,14 @@
               .append(
                 $('<legend />')
                   .text(
-                    'Show'
+                    'Annotate'
                   ),
-
-                this.drawCheckbox('showPropertyNames', 'Property names'),
 
                 this.drawCheckbox('showSizing', 'Sizing'),
 
-                this.drawCheckbox('showSpacing', 'Spacing')
+                this.drawCheckbox('showSpacing', 'Spacing'),
+
+                this.drawCheckbox('showFontSizing', 'Font size')
               ),
 
             $('<fieldset />')
@@ -470,6 +488,8 @@
                   .text(
                     'Other'
                   ),
+
+                this.drawCheckbox('showPropertyNames', 'Show CSS property names'),
 
                 this.drawCheckbox('pointerTransparency', 'Mouse pointer transparency')
               )
@@ -535,6 +555,35 @@
       this.styles['[data-xraye-controlpanel] fieldset legend'] = {
         'padding':      '0 10px 2px 10px',
         'margin':       '0 0 0 -20px'
+      };
+
+
+      // add color indicators (matching the related arrow box backgrounds) next to each display option
+      this.styles['[data-xraye-controlpanel] #showSizing + span'] =
+        this.styles['[data-xraye-controlpanel] #showSpacing + span'] =
+        this.styles['[data-xraye-controlpanel] #showFontSizing + span'] = {
+        'display':      'inline-block',
+        'min-width':    '200px'
+      }
+      this.styles['[data-xraye-controlpanel] #showSizing + span::after'] =
+        this.styles['[data-xraye-controlpanel] #showSpacing + span::after'] =
+        this.styles['[data-xraye-controlpanel] #showFontSizing + span::after'] = {
+        'content':      '""',
+        'display':      'inline-block',
+        'float':        'right',
+        'width':        '16px',
+        'height':       '16px',
+        'margin':       '4px 0',
+        'border':       '1px solid white'
+      };
+      this.styles['[data-xraye-controlpanel] #showSizing + span::after '] = {
+        'background':   this.options.annotationColors.sizing.box
+      };
+      this.styles['[data-xraye-controlpanel] #showSpacing + span::after '] = {
+        'background':   this.options.annotationColors.spacing.box
+      };
+      this.styles['[data-xraye-controlpanel] #showFontSizing + span::after '] = {
+        'background':   this.options.annotationColors.fontSizing.box
       };
 
 
@@ -629,6 +678,49 @@
     },
 
 
+    drawTextBox: function (elementId, propertyName, x1, y1, value) {
+      // from the property name, determine if this annotation is for sizing or spacing
+      var annotationType;
+
+      if (this.annotationPropertyMapping.sizing.indexOf(propertyName) !== -1) {
+        annotationType = 'sizing';
+
+      } else if (this.annotationPropertyMapping.spacing.indexOf(propertyName) !== -1) {
+        annotationType = 'spacing';
+
+      } else if (this.annotationPropertyMapping.fontSizing.indexOf(propertyName) !== -1) {
+        annotationType = 'fontSizing';
+      }
+
+
+      // define selectors which will be used to style specific arrow types
+      var rawSelectorElement        = 'data-xraye-element="' + elementId + '"',
+          rawSelectorBox            = 'data-xraye-box="' + elementId + '_' + propertyName + '"',
+          rawSelectorAnnotationType = 'data-xraye-annotation-type="' + annotationType + '"',
+          selectorBox               = '[' + rawSelectorBox + ']';
+
+
+      // create box position styles
+      this.canvasStyles[selectorBox] = {
+        'left':             (x1 - 1) + 'px',
+        'top':              y1 + 'px'
+      };
+
+
+      // add div (with attached CSS selector references) to the canvas - including box containing the value
+      this.renderElement(
+        $('<div ' + rawSelectorElement + ' ' + rawSelectorBox + ' ' + rawSelectorAnnotationType + ' />')
+          .append(
+            $('<span />')
+              .text(
+                (this.options.showPropertyNames ? propertyName + ' ' : '') +
+                (value + 'px')
+              )
+          )
+      );
+    },
+
+
     drawArrow: function (elementId, propertyName, horizontal, x1, y1, value) {
       // from the property name, determine if this annotation is for sizing or spacing
       var annotationType;
@@ -638,6 +730,9 @@
 
       } else if (this.annotationPropertyMapping.spacing.indexOf(propertyName) !== -1) {
         annotationType = 'spacing';
+
+      } else if (this.annotationPropertyMapping.fontSizing.indexOf(propertyName) !== -1) {
+        annotationType = 'fontSizing';
       }
 
 
@@ -645,7 +740,7 @@
       var rawSelectorArrowOrientation,
           rawSelectorElement          = 'data-xraye-element="' + elementId + '"',
           rawSelectorArrow            = 'data-xraye-arrow="' + elementId + '_' + propertyName + '"',
-          rawSelectorArrowAnnotation  = 'data-xraye-arrow-annotation="' + annotationType + '"',
+          rawSelectorAnnotationType   = 'data-xraye-annotation-type="' + annotationType + '"',
           selectorArrow               = '[' + rawSelectorArrow + ']';
 
 
@@ -702,7 +797,7 @@
 
       // add div (with attached CSS selector references) to the canvas - including box containing the value
       this.renderElement(
-        $('<div ' + rawSelectorElement + ' ' + rawSelectorArrow + ' ' + rawSelectorArrowOrientation + ' ' + rawSelectorArrowAnnotation + ' />')
+        $('<div ' + rawSelectorElement + ' ' + rawSelectorArrow + ' ' + rawSelectorArrowOrientation + ' ' + rawSelectorAnnotationType + ' />')
           .append(
             $('<span />')
               .text(
@@ -735,35 +830,40 @@
         'background-image':   'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.2) 35px, rgba(255, 255, 255, 0.2) 70px)',
       };
 
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow]'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow]'] =
+        this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-box]'] = {
         'opacity':            '1',
         'z-index':            '10011'
       };
 
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="sizing"]'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="sizing"]'] = {
         'border-top-color':   this.options.annotationColors.sizing['line:hover']
       };
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="horizontal"][data-xraye-arrow-annotation="spacing"]'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="horizontal"][data-xraye-annotation-type="spacing"]'] = {
         'border-top-color':   this.options.annotationColors.spacing['line:hover']
       };
 
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="sizing"]'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="sizing"]'] = {
         'border-left-color':  this.options.annotationColors.sizing['line:hover']
       };
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="vertical"][data-xraye-arrow-annotation="spacing"]'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow-orientation="vertical"][data-xraye-annotation-type="spacing"]'] = {
         'border-left-color':  this.options.annotationColors.spacing['line:hover']
       };
 
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow] span'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-annotation-type] span'] = {
         'animation':          'xraye-attention 0.3s linear 1'
       };
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow][data-xraye-arrow-annotation="sizing"] span'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-annotation-type="sizing"] span'] = {
         'color':              this.options.annotationColors.sizing['text:hover'],
         'background':         this.options.annotationColors.sizing['box:hover']
       };
-      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-arrow][data-xraye-arrow-annotation="spacing"] span'] = {
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-annotation-type="spacing"] span'] = {
         'color':              this.options.annotationColors.spacing['text:hover'],
         'background':         this.options.annotationColors.spacing['box:hover']
+      };
+      this.canvasStyles[selectorMask + ':hover ~ [data-xraye-element="' + elementId + '"][data-xraye-annotation-type="fontSizing"] span'] = {
+        'color':              this.options.annotationColors.fontSizing['text:hover'],
+        'background':         this.options.annotationColors.fontSizing['box:hover']
       };
 
 
@@ -854,6 +954,28 @@
           if ((elData.width >= _this.options.valueAnnotationThreshold) && (elData.height >= _this.options.valueAnnotationThreshold)) {
             var elementId = _this.getRandomId();
 
+
+            // get the element CSS property values?
+            if (_this.options.showSpacing || _this.options.showFontSizing) {
+              var rawElStyles = window.getComputedStyle(this, null);
+
+              // convert values to integers
+              var elStyles = {};
+
+              if (_this.options.showSpacing) {
+                for (var item in _this.annotationPropertyMapping.spacing) {
+                  if (rawElStyles[_this.annotationPropertyMapping.spacing[item]]) {
+                    elStyles[_this.annotationPropertyMapping.spacing[item]] = parseInt(rawElStyles[_this.annotationPropertyMapping.spacing[item]], 10);
+                  }
+                }
+              }
+
+              if (_this.options.showFontSizing) {
+                elStyles.fontSize = parseInt(rawElStyles.fontSize, 10);
+              }
+            }
+
+
             // draw the base hover-highlighting rectangle element over the element
             _this.drawElementMask(
               elementId, level, (elData.left - _this.elementData.left), (elData.top - _this.elementData.top), elData.width, elData.height
@@ -873,18 +995,6 @@
 
             // if set to annotate spacing, draw arrows detailing it
             if (_this.options.showSpacing) {
-              // get the element spacing (margin and padding) values
-              var rawElStyles = window.getComputedStyle(this, null);
-
-              // convert values to integers
-              var elStyles = {};
-
-              for (var item in _this.annotationPropertyMapping.spacing) {
-                if (rawElStyles[_this.annotationPropertyMapping.spacing[item]]) {
-                  elStyles[_this.annotationPropertyMapping.spacing[item]] = parseInt(rawElStyles[_this.annotationPropertyMapping.spacing[item]], 10);
-                }
-              }
-
               // draw arrows detailing margin values if they exceed the threshold...
               if (elStyles.marginTop >= _this.options.valueAnnotationThreshold) {
                 _this.drawArrow(
@@ -927,6 +1037,28 @@
                 _this.drawArrow(
                   elementId, 'paddingRight', true, (elData.left - _this.elementData.left + (elData.width - elStyles.paddingRight)), (elData.top - _this.elementData.top), elStyles.paddingRight
                 );
+              }
+            }
+
+
+            // if set to annotate font sizing, draw boxes
+            if (_this.options.showFontSizing) {
+              if (elStyles.fontSize && (elStyles.fontSize > 0)) {
+                // only annotate the font size if the element contains text content
+                var elementTextContent = $.trim(
+                  $element
+                    .contents()
+                      .filter(function () {
+                        return (this.nodeType == 3) || this.tagName === 'P';
+                      })
+                      .text()
+                );
+
+                if (elementTextContent.length > 0) {
+                  _this.drawTextBox(
+                    elementId, 'fontSize', (elData.left - _this.elementData.left + elData.width + 1), (elData.top - _this.elementData.top + 1), elStyles.fontSize
+                  );
+                }
               }
             }
           }
