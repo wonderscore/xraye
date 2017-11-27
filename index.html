@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>x r a y e | Annotate HTML elements</title>
+    <meta property="og:title" content="xraye" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="Annotate HTML elements" />
+    <meta property="og:description" content="Annotate HTML elements" />
+    <link rel="canonical" href="https://wonderscore.github.io/xraye/" />
+    <meta property="og:url" content="https://wonderscore.github.io/xraye/" />
+    <meta property="og:site_name" content="xraye" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,400i,700,700i" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css?20171127">
+  </head>
+
+  <body>
+    <header>
+      <h1>
+        <img src="img/logo.svg" alt="">
+        <span class="show-for-sr">x r a y e</span>
+      </h1>
+
+      <h2>
+        Annotate HTML elements
+      </h2>
+
+      <a href="https://github.com/wonderscore/xraye">
+        View on GitHub
+      </a>
+    </header>
+
+
+
+    <p class="intro">
+      <em>XRAYE</em> is a jQuery plugin for visually annotating HTML element sizing, spacing, and other CSS properties.
+      These annotations are directly overlaid over the page elements that you specify.
+    </p>
+
+
+
+    <section class="main-content">
+<h3 id="usage">Usage</h3>
+<h4 id="basic">Basic</h4>
+<ol>
+<li>Ensure jQuery is loaded on your page</li>
+<li>Include a reference to the <code>xraye.js</code> file on your page</li>
+<li>Add the following Javascript instantiation code (either directly inside an inline <code>&lt;script&gt;</code> block or in an external script file):</li>
+</ol>
+<pre><code>$('.yourElementSelector').xraye({});</code></pre>
+<p>This is enough to create an instance of <em>XRAYE</em> (using good default settings) on each of the elements provided by your element selector.</p>
+<h4 id="advanced">Advanced</h4>
+<p>Option values can be changed from the defaults and passed into the plugin instantiation object:</p>
+<pre><code>$('.yourElementSelector').xraye({
+  active: false,
+
+  exclude: function ($el) {
+    return (
+      $el.is('.hiddenContent') ||
+      !$el.is(':visible') ||
+      $el.is('[aria-hidden="true"]')
+    );
+  },
+
+  excludeChildrenOf: function ($el) {
+    return (
+      $el.is('.hiddenContent')
+    );
+  }
+});</code></pre>
+<h3 id="options">Options</h3>
+<h4 id="ui-editable-options">UI editable options</h4>
+<p>These options are initialised using the default values listed below - these initial values can be overridden by passing in values in the plugin instantiation, and can be further changed during use using the <em>XRAYE</em> control menu.</p>
+<pre><code>{
+  active:                     true,
+
+  pointerTransparency:        false,
+
+  showSizing:                 true,
+  showSpacing:                true,
+  showPropertyNames:          true,
+
+  displayUnitsPixels:         true,
+  displayUnitsPercent:        true
+}</code></pre>
+<h4 id="additional-plugin-instantiation-options">Additional plugin instantiation options</h4>
+<p>These options are initialised using the default values listed below - these initial values can also be overridden by passing in values in the plugin instantiation, but there is no UI to modify these values live during use. However, the plugin method <code>.changeOption('optionName', value)</code> is provided to achieve this.</p>
+<pre><code>{
+  exclude:                    '',       // string CSS selector or function
+  excludeChildrenOf:          '',       // string CSS selector or function
+  valueAnnotationThreshold:   10,       // minimum number of pixels value must be in order to be annotated
+
+  controlIcon: {
+    position:                 'left',   // 'left' or 'right'
+    offset:                   '-48px'
+  },
+
+  annotationColors: {
+    sizing: {
+      'line':                 'black',
+      'box':                  'black',
+      'arrow':                'red',
+      'text':                 'white',
+      'line:hover':           'red',
+      'box:hover':            'red',
+      'arrow:hover':          'red',
+      'text:hover':           'white'
+    },
+    spacing: {
+      'line':                 'orange',
+      'box':                  'orange',
+      'arrow':                'green',
+      'text':                 'black',
+      'line:hover':           'green',
+      'box:hover':            'green',
+      'arrow:hover':          'green',
+      'text:hover':           'white'
+    }
+  },
+
+  levelColors: {
+    1: 'blue',
+    2: 'red',
+    3: 'yellow',
+    4: 'orange',
+    5: 'green',
+    6: 'purple',
+    7: 'pink',
+    8: 'brown',
+    9: 'beige'
+  }
+}</code></pre>
+    </section>
+
+
+
+
+    <footer class="site-footer">
+      <span>
+        &copy; 2017 <a href="https://dannya.com/">Danny Allen</a>
+      </span>
+      /
+      <span>
+        &copy; 2017 <a href="https://wonderscore.co.uk/">Wonderscore Ltd</a>
+      </span>
+    </footer>
+  </body>
+</html>
