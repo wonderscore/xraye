@@ -1,7 +1,7 @@
 ![xraye](https://wonderscore.github.io/xraye/img/logo.svg)
 ==========
 
-XRAYE is a jQuery plugin for visually annotating HTML element sizing, spacing, and other CSS properties. These annotations are directly overlaid over the page elements that you specify.
+*XRAYE* is a jQuery plugin for visually annotating HTML element sizing, spacing, and other CSS properties. These annotations are directly overlaid over the page elements that you specify.
 
 
 # Usage
@@ -54,14 +54,15 @@ These options are initialised using the default values listed below - these init
 {
   active:                     true,
 
-  pointerTransparency:        false,
-
   showSizing:                 true,
   showSpacing:                true,
-  showPropertyNames:          true,
+  showFontSizing:             true,
 
   displayUnitsPixels:         true,
-  displayUnitsPercent:        true
+  displayUnitsPercent:        true,
+
+  showPropertyNames:          true,
+  pointerTransparency:        false
 }
 ~~~~
 
