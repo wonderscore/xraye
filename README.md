@@ -4,6 +4,9 @@
 *XRAYE* is a jQuery plugin for visually annotating HTML element sizing, spacing, and other CSS properties. These annotations are directly overlaid over the page elements that you specify.
 
 
+![xraye screencast](https://wonderscore.github.io/xraye/img/xraye.gif)
+
+
 # Usage
 
 ## Basic
