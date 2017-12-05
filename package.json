@@ -1,6 +1,6 @@
 {
   "name": "xraye-web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "scripts": {},
   "devDependencies": {
     "babel-core": "^6.26.0",

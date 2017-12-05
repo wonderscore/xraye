@@ -55,11 +55,13 @@ header {
     border-top: 2px solid #e6e6e6;
     border-bottom: 2px solid #e6e6e6;
     color: #000000;
-    text-decoration-style: dotted;
+    text-decoration: underline;
+
+    transition: background 0.3s ease-in-out;
 
     &:focus,
     &:hover {
-      text-decoration-style: solid;
+      background: #e6e6e6;
     }
   }
 }
@@ -69,6 +71,15 @@ header {
   margin: 0;
   padding: 0;
   font-size: 2rem;
+}
+
+
+.screencast {
+  margin-top: 100px;
+
+  img {
+    width: 100%;
+  }
 }
 
 
@@ -107,11 +118,11 @@ footer {
 
   a {
     color: #000000;
-    text-decoration-style: dotted;
+    text-decoration-style: underline;
 
     &:focus,
     &:hover {
-      text-decoration-style: solid;
+      text-decoration: underline;
     }
   }
 }
